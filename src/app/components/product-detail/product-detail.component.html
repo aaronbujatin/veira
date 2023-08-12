@@ -1,0 +1,95 @@
+
+<section class="overflow-hidden bg-white py-11 font-poppins dark:bg-gray-800 font-['Assistant']">
+    <div class="max-w-6xl px-4 py-4 mx-auto lg:py-8 md:px-6">
+        <div class="flex flex-wrap -mx-4">
+            <div class="w-full mb-8 md:w-1/2 md:mb-0">
+                <div class="sticky top-0 z-50 overflow-hidden ">
+                    <div class="relative mb-6 lg:mb-10 lg:h-2/4 p-4">
+                        <img src="{{product.imageUrl}}" alt="" class="object-cover w-full lg:h-full ">
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="w-full px-4 md:w-1/2 ">
+                <div class="lg:pl-20">
+                    <div class=" ">
+                        <p class="text-gray-500 font-thin text-sm">Veira Co.</p>
+                        <h2 class="max-w-xl mb-2 text-2xl tracking-wider dark:text-gray-400 md:text-4xl">
+                            {{product.name}}</h2>
+                        <p class="inline-block mb-6 text-2xl font-normal text-[#121212]  ">
+                            <span>{{product.price | currency : 'Php '}}</span>
+                        </p>
+                    </div>
+                    <div class="mb-4 ">
+                        <h2 class="w-16 pb-1 text-sm text-[#121212] ">
+                            Size</h2>
+                        <div>
+                            <div class="flex flex-wrap -mb-2">
+                                <div *ngFor="let variant of product.variants">
+                                    <button class="px-6 border-gray-400 py-2 mb-2 mr-4  border rounded-3xl hover:border-[#121212] 
+                                     focus:bg-[#121212] focus:text-white" (click)="showStock(variant.size)">
+                                        {{variant.size}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="w-16 pb-1 text-sm text-[#121212] " *ngIf="selectedSize">
+                        Stock: {{ getStock(selectedSize) }} </h2>
+                    <div class="mb-8 ">
+                        <h2 class="w-16 pb-1 text-sm text-[#121212] ">
+                            Color</h2>
+                        <div>
+                            <div class="flex flex-wrap -mb-2">
+                                <button class="px-6 border-gray-400 py-2 mb-2 mr-4  border rounded-3xl hover:border-[#121212] 
+                                     focus:bg-[#121212] focus:text-white">
+                                    Black
+                                </button>
+                                <button class="px-6 border-gray-400 py-2 mb-2 mr-4  border rounded-3xl hover:border-[#121212] 
+                                     focus:bg-[#121212] focus:text-white">
+                                    White
+                                </button>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-32 mb-8 ">
+                        <h2 class="w-16 pb-1 text-base text-[#121212] ">
+                            Quantity</h2>
+                        <div>
+                            <label for="Quantity" class="sr-only"> Quantity </label>
+
+                            <div class="flex items-center border border-[#121212] rounded">
+                                <button type="button"
+                                    class="w-10 h-10 leading-10 text-[#121212] transition hover:opacity-75"
+                                    (click)="decrement()" [disabled]="shouldDisableButton()">
+                                    &minus;
+                                </button>
+
+                                <input type="number" id="Quantity" value="{{quantity}}" disabled
+                                    class="text-[#121212] border border-[#121212]  focus:ring-2 focus:ring-black h-10 w-16 border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none" />
+
+
+                                <button type="button"
+                                    class="w-10 h-10 leading-10 text-[#121212] transition hover:opacity-75"
+                                    (click)="increment()">
+                                    &plus;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center gap-4 w-full">
+                        <button  (click)="addToCart(product)"
+                            class="w-full bg-[#121212] text-white hover:text-[#121212] border hover:border-[#121212] hover:bg-white px-4 py-2 font-medium mb-2 md:mb-0 md:mr-2 ">Add
+                            to cart</button>
+                        <button
+                            class="w-full bg-[#121212] text-white hover:text-[#121212] border hover:border-[#121212] hover:bg-white px-4 py-2 font-medium mb-2 md:mb-0 md:mr-2 ">Buy
+                            now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
