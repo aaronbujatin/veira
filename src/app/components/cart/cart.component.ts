@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class CartComponent {
 
+  cartItems: any[] = [];
+
+  ngOnInit() {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      this.cartItems = JSON.parse(storedCart);
+    }
+  }
+
 }

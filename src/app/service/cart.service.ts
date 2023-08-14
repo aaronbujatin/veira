@@ -35,7 +35,6 @@ export class CartService {
 
   getCartItems(): any[] {
     const cartItems = localStorage.getItem(this.cartKey);
-
     return cartItems ? JSON.parse(cartItems) : [];
   }
 

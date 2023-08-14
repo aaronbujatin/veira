@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { Order } from 'src/app/model/order.model';
 import { Product } from 'src/app/model/product.model';
 import { Variant } from 'src/app/model/variant.model';
 import { CartService } from 'src/app/service/cart.service';
@@ -22,8 +23,9 @@ export class ProductDetailComponent {
   ngOnInit() {
     this.route.params.subscribe(params => this.getProductById(params['id']))
     console.log(this.product);
-
   }
+
+  orders: Order[] = [{ productName: '', quantity: 0 }];
 
   addToCart(product : any): void {
     this.cartService.addToCart(product);
