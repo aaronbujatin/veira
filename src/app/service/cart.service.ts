@@ -21,7 +21,7 @@ export class CartService {
   addToCart(product: Product, size: string, quantity: number) {
     this.cartItems = this.getCartItems();
 
-    const itemExists = this.cartItems.findIndex(cartItem => cartItem.productId === product.id);
+    const itemExists = this.cartItems.findIndex(cartItem => cartItem.productId === product.id && cartItem.size === undefined);
     if (itemExists === -1) {
       const cartItem: CartItem = {
         productId: product.id,
@@ -33,6 +33,8 @@ export class CartService {
       }
       //when user add a item it will push to array
       this.cartItems.push(cartItem);
+    
+      
       //this will check the lenght if items in cart
       this.cartSizeSubject.next(this.cartItems.length);
       //this will set the item in localstorage and convert the product item to json

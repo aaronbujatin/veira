@@ -13,7 +13,9 @@ import { ProductNewarrivalComponent } from './components/product-newarrival/prod
 import { FooterComponent } from './components/footer/footer.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-
+import { NgToastModule } from 'ng-angular-popup';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +32,11 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     BrowserModule,
     AppRoutingModule, 
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    NgToastModule ,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+   
   ],
   providers: [],
   bootstrap: [AppComponent]
