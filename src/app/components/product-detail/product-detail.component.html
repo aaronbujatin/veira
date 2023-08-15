@@ -28,13 +28,14 @@
                             <div class="flex flex-wrap -mb-2">
                                 <div *ngFor="let variant of product.variants">
                                     <button class="px-6 border-gray-400 py-2 mb-2 mr-4  border rounded-3xl hover:border-[#121212] 
-                                     focus:bg-[#121212] focus:text-white" (click)="showStock(variant.size)">
+                                     focus:bg-[#121212] focus:text-white" (click)="showStock(variant.size)" (click)="selectSize(variant.size)">
                                         {{variant.size}}
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <label for="">XS</label>
                     <h2 class="w-16 pb-1 text-sm text-[#121212] " *ngIf="selectedSize">
                         Stock: {{ getStock(selectedSize) }} </h2>
                     <div class="mb-8 ">
@@ -46,9 +47,6 @@
                                      bg-[#121212] text-white">
                                     Black
                                 </button>
-                                
-
-
                             </div>
                         </div>
                     </div>

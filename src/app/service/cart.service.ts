@@ -1,33 +1,42 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Product } from '../model/product.model';
+import { CartItem } from '../model/cart-item.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  
+
   constructor() {
     this.cartItems = this.getCartItems();
-    this.cartSizeSubject.next(this.cartItems.length); 
-   }
+    this.cartSizeSubject.next(this.cartItems.length);
+  }
 
   private cartItems: any[] = [];
   private cartSizeSubject = new BehaviorSubject<number>(0);
-
   private cartKey = 'cart';
 
-  addToCart(item: any) {
+  addToCart(product: Product, size: string, quantity: number) {
     this.cartItems = this.getCartItems();
 
-    const itemExists = this.cartItems.some(cartItem => cartItem.id === item.id);
-    if(!itemExists){
+    const itemExists = this.cartItems.findIndex(cartItem => cartItem.productId === product.id);
+    if (itemExists === -1) {
+      const cartItem: CartItem = {
+        productId: product.id,
+        name: product.name,
+        imageUrl : product.imageUrl,
+        size,
+        quantity,
+    
+      }
       //when user add a item it will push to array
-    this.cartItems.push(item);
-    //this will check the lenght if items in cart
-    this.cartSizeSubject.next(this.cartItems.length);
-    //this will set the item in localstorage and convert the product item to json
-    localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));
+      this.cartItems.push(cartItem);
+      //this will check the lenght if items in cart
+      this.cartSizeSubject.next(this.cartItems.length);
+      //this will set the item in localstorage and convert the product item to json
+      localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));
     } else {
       console.log('Item already in the cart');
     }

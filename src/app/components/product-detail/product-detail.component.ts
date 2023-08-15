@@ -21,14 +21,20 @@ export class ProductDetailComponent {
     private titleService : Title) { }
 
   ngOnInit() {
+    
     this.route.params.subscribe(params => this.getProductById(params['id']))
-    console.log(this.product);
+    
   }
 
-  orders: Order[] = [{ productName: '', quantity: 0 }];
+
 
   addToCart(product : any): void {
-    this.cartService.addToCart(product);
+    if(!this.productSize === undefined) {
+      this.cartService.addToCart(product, this.productSize, this.quantity);
+    } else {
+      console.log("Please select size");
+      
+    }
   }
 
   product: Product = new Product
@@ -38,12 +44,10 @@ export class ProductDetailComponent {
     this.productService.getProductById(id).subscribe(
       (response: Product) => {
         this.product = response
-        this.titleService.setTitle(` ${this.product.name} Veira Co.`)
+        this.titleService.setTitle(` ${this.product.name} | Veira Co.`)
       }
     )
   }
-
-
 
 
 
@@ -58,9 +62,18 @@ export class ProductDetailComponent {
     return selectedSize ? selectedSize.stock : 0;
   }
 
+  productSize : string
+
+  selectSize(size: string) {
+    this.productSize = size;
+    // You can perform additional actions if needed
+  }
 
 
-  quantity: number = 1
+
+
+
+  quantity : number = 1
 
   increment() {
     this.quantity = this.quantity + 1;
