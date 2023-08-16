@@ -22,21 +22,19 @@ export class ProductDetailComponent {
     private route: ActivatedRoute,
     private cartService: CartService,
     private titleService: Title,
-
     private toastr: ToastrService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => this.getProductById(params['id']))
   }
 
- 
-
   addToCart(product: any): void {
     if (this.selectedSize) {
       console.log(this.selectedSize + " " + this.quantity);
-      
+      this.toggleLoading()
       this.cartService.addToCart(product, this.selectedSize, this.quantity);
       this.selectedSize = ''
+      this.quantity = 1
       this.toastr.success('Item was added to cart', 'Veira Co.', { positionClass: 'toast-bottom-left', });
     } else {
       console.log(this.cartService.addToCart(product, this.productSize, this.quantity));
@@ -104,6 +102,15 @@ export class ProductDetailComponent {
   decrement() {
     this.quantity -= 1;
 
+  }
+
+  isLoading = false;
+
+  toggleLoading = () => {
+    this.isLoading = true;
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000)
   }
 
 

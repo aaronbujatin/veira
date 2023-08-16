@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../model/product.model';
 import { CartItem } from '../model/cart-item.model';
@@ -36,15 +36,10 @@ export class CartService {
         imageUrl: product.imageUrl,
         size,
         quantity,
+        price : product.price
       }
-
-      // console.log(cartItem);
-      
-      console.log('Existing Cart Items:', this.cartItems);
       //when user add a item it will push to array
       this.cartItems.push(cartItem);
-      console.log("Product : " + product.id + ", Size : " + size + ", Quantity : " + quantity);
-      console.log('Updated Cart Items:', this.cartItems);
       //this will check the lenght if items in cart
       this.cartSizeSubject.next(this.cartItems.length);
       //this will set the item in localstorage and convert the product item to json
@@ -58,15 +53,50 @@ export class CartService {
   }
 
   removeFromCart(item: any) {
-    const index = this.cartItems.indexOf(item);
+    const index = this.cartItems.findIndex(cartItem =>
+      cartItem.productId === item.productId && cartItem.size === item.size
+    );
+  
+    console.log(index);
+    
     if (index !== -1) {
+      console.log("inside of remove function");
+      
       this.cartItems.splice(index, 1);
       this.cartSizeSubject.next(this.cartItems.length);
+      this.updateLocalStorage();
     }
+    localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));
   }
 
   getCartSize() {
     return this.cartSizeSubject.asObservable();
   }
+
+  private updateLocalStorage() {
+    localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));
+  }
+
+  incrementItemFromCart(item : any){
+    const itemExists = this.cartItems.findIndex(cartItem =>
+      cartItem.productId === item.productId && cartItem.size === item.size);
+    if (itemExists !== -1) {
+      this.cartItems[itemExists].quantity += 1;
+      localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));
+    }
+  }
+
+  decrementItemFromCart(item : any){
+    const itemExists = this.cartItems.findIndex(cartItem =>
+      cartItem.productId === item.productId && cartItem.size === item.size);
+    if (itemExists !== -1) {
+      console.log("this is from decrement function");
+      
+      this.cartItems[itemExists].quantity -= 1;
+      localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));
+    }
+  }
+
+  
 
 }

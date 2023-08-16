@@ -5,5 +5,6 @@ export class CartItem {
     quantity: number;
     imageUrl: string;
     size: string;
+    price: number
 
 }

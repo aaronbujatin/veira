@@ -10,33 +10,51 @@
             <div class="mt-8">
                 <ul class="space-y-4" *ngIf="cartItems.length > 0;">
                     <li class="flex items-center gap-4" *ngFor="let item of cartItems">
-                        <img src="{{item.imageUrl}}"
-                            alt="" class="h-28 w-28 rounded object-cover" />
+                        <img src="{{item.imageUrl}}" alt="" class="h-28 w-28 rounded object-cover" />
                         <div>
-                            <h3 class="text-sm text-gray-900">{{item.name}}</h3>
+                            <h3 class="text-lg md:text-2xl text-[#121212]">{{item.name}}</h3>
 
-                            <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
+                            <dl class="mt-0.5 space-y-px text-[10px] text-[#121212]">
                                 <div>
-                                    <dt class="inline">Size:</dt>
-                                    <dd class="inline">{{item.size}}</dd>
+                                    <dt class="inline text-sm md:text-base">Size:</dt>
+                                    <dd class="inline text-sm md:text-sm"> {{item.size}}</dd>
                                 </div>
 
                                 <div>
-                                    <dt class="inline">Color:</dt>
-                                    <dd class="inline">White</dd>
+                                    <dt class="inline text-sm md:text-base">Color:</dt>
+                                    <dd class="inline text-sm md:text-sm">Black</dd>
+                                </div>
+                                <div>
+                                    <dt class="inline text-sm md:text-base">{{item.quantity}} x </dt>
+                                    <dd class="inline text-sm md:text-sm">{{item.price}}</dd>
                                 </div>
                             </dl>
                         </div>
 
                         <div class="flex flex-1 items-center justify-end gap-2">
                             <form>
-                                <label for="Line1Qty" class="sr-only"> Quantity </label>
+                                <div>
+                                    <label for="Quantity" class="sr-only"> Quantity </label>
 
-                                <input type="number" min="1" value="1" id="Line1Qty"
-                                    class="h-8 w-12 rounded border-gray-200 bg-gray-50 p-0 text-center text-xs text-gray-600 [-moz-appearance:_textfield] focus:outline-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
+                                    <div class="flex  items-center border border-[#121212] rounded">
+                                        <button type="button"
+                                            class="w-5 h-10 leading-10 text-[#121212] transition hover:opacity-75"
+                                            (click)="decrement(item)"  [disabled]="item.quantity === 1">
+                                            &minus;
+                                        </button>
+
+                                        <input type="number" id="Quantity" value="{{item.quantity}}" disabled
+                                            class="text-[#121212] w-10 border border-[#121212]  focus:ring-2 focus:ring-black h-10 border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none" />
+                                        <button type="button"
+                                            class="w-5 h-10 leading-10 text-[#121212] transition hover:opacity-75"
+                                            (click)="increment(item)">
+                                            &plus;
+                                        </button>
+                                    </div>
+                                </div>
                             </form>
 
-                            <button class="text-gray-600 transition hover:text-red-600">
+                            <button class="text-[#121212] transition hover:text-red-600" (click)="removeFromCart(item)">
                                 <span class="sr-only">Remove item</span>
 
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -46,12 +64,12 @@
                                 </svg>
                             </button>
                         </div>
-                    </li>       
+                    </li>
                 </ul>
                 <div class="mt-8 flex justify-end border-t border-gray-100 pt-8">
                     <div class="w-screen max-w-lg space-y-4">
                         <dl class="space-y-0.5 text-sm text-gray-700">
-                            <div class="flex justify-between">
+                            <!-- <div class="flex justify-between">
                                 <dt>Subtotal</dt>
                                 <dd>£250</dd>
                             </div>
@@ -64,31 +82,20 @@
                             <div class="flex justify-between">
                                 <dt>Discount</dt>
                                 <dd>-£20</dd>
-                            </div>
+                            </div> -->
 
                             <div class="flex justify-between !text-base font-medium">
                                 <dt>Total</dt>
-                                <dd>£200</dd>
+                                <dd>{{getTotalPrice() | currency : '₱ '}}</dd>
                             </div>
                         </dl>
 
-                        <div class="flex justify-end">
-                            <span
-                                class="inline-flex items-center justify-center rounded-full bg-indigo-100 px-2.5 py-0.5 text-indigo-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="-ms-1 me-1.5 h-4 w-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z" />
-                                </svg>
-
-                                <p class="whitespace-nowrap text-xs">2 Discounts Applied</p>
-                            </span>
-                        </div>
+                       
 
                         <div class="flex justify-end">
                             <button
-                            class="w-32 bg-[#121212] text-white hover:text-[#121212] border hover:border-[#121212] hover:bg-white px-4 py-2 font-medium mb-2 md:mb-0 md:mr-2 ">Buy
-                            now</button>
+                                class="w-32 bg-[#121212] text-white hover:text-[#121212] border hover:border-[#121212] hover:bg-white px-4 py-2 font-medium mb-2 md:mb-0 md:mr-2 ">Buy
+                                now</button>
                         </div>
                     </div>
                 </div>
