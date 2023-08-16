@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { Order } from 'src/app/model/order.model';
 import { Product } from 'src/app/model/product.model';
 import { Variant } from 'src/app/model/variant.model';
@@ -25,23 +26,21 @@ export class ProductDetailComponent {
     private toastr: ToastrService) { }
 
   ngOnInit() {
-
     this.route.params.subscribe(params => this.getProductById(params['id']))
-
   }
 
-
+ 
 
   addToCart(product: any): void {
-    if (!this.productSize === undefined) {
-      this.cartService.addToCart(product, this.productSize, this.quantity);
+    if (this.selectedSize) {
+      console.log(this.selectedSize + " " + this.quantity);
+      
+      this.cartService.addToCart(product, this.selectedSize, this.quantity);
+      this.selectedSize = ''
+      this.toastr.success('Item was added to cart', 'Veira Co.', { positionClass: 'toast-bottom-left', });
+    } else {
       console.log(this.cartService.addToCart(product, this.productSize, this.quantity));
-      this.showSuccess();
-       console.log(this.cartService.addToCart(product, this.productSize, this.quantity))
-
-    } else if (this.productSize === undefined) {
-      this.productAlreadyInCartWarn();
-      console.log(this.productSize);
+      this.toastr.success('Please select item size', 'Veira Co.', { positionClass: 'toast-bottom-left', });
     }
 
 
@@ -49,15 +48,11 @@ export class ProductDetailComponent {
 
 
   showSuccess() {
-    this.toastr.success('Item was added to cart, Baby!','Veira Co.',{positionClass: 'toast-bottom-left', });
+    this.toastr.success('Item was added to cart, Baby!', 'Veira Co.', { positionClass: 'toast-bottom-left', });
   }
 
-  productAlreadyInCartWarn(){
-    this.toastr.success('Item was already in cart','Veira Co.',{positionClass: 'toast-bottom-left', });
-  }
-
-  showSelectSizeWarn(){
-    this.toastr.success('Select item size','Veira Co.',{positionClass: 'toast-bottom-left', });
+  showSelectSizeWarn() {
+    this.toastr.success('Select item size', 'Veira Co.', { positionClass: 'toast-bottom-left', });
   }
 
   product: Product = new Product
@@ -72,10 +67,16 @@ export class ProductDetailComponent {
     )
   }
 
+  isSizeSelected(size: string): boolean {
+    return this.selectedSize === size;
+  }
 
 
-  selectedSize: string;
+  selectedSize: string = ""
 
+  selectSize(size: string) {
+    this.selectedSize = size; // Set the selected size
+  }
   showStock(size: string): void {
     this.selectedSize = size;
   }
@@ -86,16 +87,6 @@ export class ProductDetailComponent {
   }
 
   productSize: string
-
-  selectSize(size: string) {
-    this.productSize = size;
-    console.log(this.productSize);
-
-    // You can perform additional actions if needed
-  }
-
-
-
 
 
   quantity: number = 1

@@ -19,10 +19,7 @@ export class HeaderComponent {
   ngOnInit() {
     this.cartService.getCartSize().subscribe(size => {
       this.cartSize = size;
-      console.log(this.cartSize);
-    });
-
-   
+    }); 
   }
 
  

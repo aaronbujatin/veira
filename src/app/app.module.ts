@@ -16,6 +16,9 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NgToastModule } from 'ng-angular-popup';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChildComponent } from './components/child/child.component';
+import { ParentComponent } from './components/parent/parent.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,13 +29,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProductNewarrivalComponent,
     FooterComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ChildComponent,
+    ParentComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule, 
     RouterModule,
     HttpClientModule,
+    FormsModule,
     NgToastModule ,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),

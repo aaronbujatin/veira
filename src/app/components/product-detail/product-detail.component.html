@@ -21,14 +21,13 @@
                             <span>{{product.price | currency : 'Php '}}</span>
                         </p>
                     </div>
-                    <div class="mb-4 ">
+                    <div class="">
                         <h2 class="w-16 pb-1 text-sm text-[#121212] ">
                             Size</h2>
                         <div>
                             <div class="flex flex-wrap -mb-2">
-                                <div *ngFor="let variant of product.variants">
-                                    <button class="px-6 border-gray-400 py-2 mb-2 mr-4  border rounded-3xl hover:border-[#121212] 
-                                     focus:bg-[#121212] focus:text-white"  (click)="showStock(variant.size)" (click)="selectSize(variant.size)">
+                                <div >
+                                    <button *ngFor="let variant of product.variants" class="px-6 border-gray-400 py-2 mb-2 mr-4  border rounded-3xl hover:border-[#121212]" (click)="showStock(variant.size)" (click)="selectSize(variant.size)" [ngClass]="{'px-6 border-gray-400 py-2 mb-2 mr-4 border rounded-3xl hover:border-[#121212] focus:bg-[#121212] focus:text-white': true, 'bg-[#121212] text-white': isSizeSelected(variant.size)}">
                                         {{variant.size}}
                                     </button>
                                 </div>
@@ -37,7 +36,7 @@
                     </div>
                     <h2 class="w-16 pb-1 text-sm text-[#121212] " *ngIf="selectedSize">
                         Stock: {{ getStock(selectedSize) }} </h2>
-                    <div class="mb-8 ">
+                    <div class="mb-8 mt-10">
                         <h2 class="w-16 pb-1 text-sm text-[#121212] ">
                             Color</h2>
                         <div>
@@ -87,4 +86,4 @@
         </div>
     </div>
 </section>
-<button (click)="showSuccess()" class="bg-blue-600 text-white">click me</button>
+<!-- <button (click)="showSuccess()" class="bg-blue-600 text-white">click me</button> -->
