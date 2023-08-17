@@ -18,7 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChildComponent } from './components/child/child.component';
 import { ParentComponent } from './components/parent/parent.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +42,7 @@ import { FormsModule } from '@angular/forms';
     NgToastModule ,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    ReactiveFormsModule
    
   ],
   providers: [],

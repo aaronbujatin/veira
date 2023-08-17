@@ -1,0 +1,7 @@
+checkout info
+	-email
+	-Country/Region
+	-Firstname
+	-LastName
+	-Address
+Postal code, city, Phone
