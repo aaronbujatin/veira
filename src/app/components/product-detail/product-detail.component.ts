@@ -29,7 +29,7 @@ export class ProductDetailComponent {
   }
 
   addToCart(product: any): void {
-    if (this.selectedSize) {
+    if (this.selectedSize !== "") {
       console.log(this.selectedSize + " " + this.quantity);
       this.toggleLoading()
       this.cartService.addToCart(product, this.selectedSize, this.quantity);
@@ -37,7 +37,7 @@ export class ProductDetailComponent {
       this.quantity = 1
       this.toastr.success('Item was added to cart', 'Veira Co.', { positionClass: 'toast-bottom-left', });
     } else {
-      console.log(this.cartService.addToCart(product, this.productSize, this.quantity));
+      
       this.toastr.success('Please select item size', 'Veira Co.', { positionClass: 'toast-bottom-left', });
     }
 

@@ -36,7 +36,7 @@ export class CartService {
         imageUrl: product.imageUrl,
         size,
         quantity,
-        price : product.price
+        unitPrice : product.price
       }
       //when user add a item it will push to array
       this.cartItems.push(cartItem);
@@ -95,6 +95,12 @@ export class CartService {
       this.cartItems[itemExists].quantity -= 1;
       localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));
     }
+  }
+
+  clearCart() {
+    this.cartItems = [];
+    this.cartSizeSubject.next(0);
+    this.updateLocalStorage();
   }
 
   

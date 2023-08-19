@@ -23,7 +23,7 @@ export class CartComponent {
   getTotalPrice(): number {
     let totalPrice = 0;
     for (const item of this.cartItems) {
-      totalPrice += item.price * item.quantity;
+      totalPrice += item.unitPrice * item.quantity;
     }
     return totalPrice;
   }
@@ -31,16 +31,12 @@ export class CartComponent {
  
 
   increment(cartItem : any) {
-    this.cartService.incrementItemFromCart(cartItem);
-    console.log(cartItem);
+    this.cartService.incrementItemFromCart(cartItem); 
     this.ngOnInit()
   }
 
- 
-
   decrement(cartItem : any) {
     this.cartService.decrementItemFromCart(cartItem);
-    console.log(cartItem);
     this.ngOnInit()
 
   }

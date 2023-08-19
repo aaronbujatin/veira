@@ -9,10 +9,10 @@ export class CheckoutService {
   constructor(private httpClient: HttpClient) { }
 
 
-  private baseUrl = "https://localhost:8080";
+  private baseUrl = "http://localhost:8080"
 
   saveCheckout(formData){
-    return this.httpClient.post(`${this.baseUrl}/api/v1/checkouts`, formData);
+    return this.httpClient.post("http://localhost:8080/api/v1/orders", formData);
   }
 
 }
