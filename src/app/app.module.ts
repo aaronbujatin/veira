@@ -13,7 +13,6 @@ import { ProductNewarrivalComponent } from './components/product-newarrival/prod
 import { FooterComponent } from './components/footer/footer.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { NgToastModule } from 'ng-angular-popup';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChildComponent } from './components/child/child.component';
@@ -39,7 +38,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     HttpClientModule,
     FormsModule,
-    NgToastModule ,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule

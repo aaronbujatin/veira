@@ -17,7 +17,14 @@ export class CartComponent {
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
       this.cartItems = JSON.parse(storedCart);
+    }  
+  }
+
+  isCartEmpty(){
+    if(this.cartItems.length === 0){
+      return true
     }
+    return false
   }
 
   getTotalPrice(): number {
@@ -46,6 +53,8 @@ export class CartComponent {
     this.ngOnInit()
     this.toastr.success('Item was deleted', 'Veira Co.', { positionClass: 'toast-bottom-left', });
   }
+
+  
 
   
 

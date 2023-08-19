@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { NgToastService } from 'ng-angular-popup';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { Order } from 'src/app/model/order.model';
@@ -21,27 +20,33 @@ export class ProductDetailComponent {
     private productService: ProductService,
     private route: ActivatedRoute,
     private cartService: CartService,
+    private router: Router,
     private titleService: Title,
     private toastr: ToastrService) { }
 
   ngOnInit() {
+    console.log(this.cartService.getCartItems());
+    
     this.route.params.subscribe(params => this.getProductById(params['id']))
+
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      this.cartItems = JSON.parse(storedCart);
+    } 
   }
+  cartItems: any[] = [];
 
   addToCart(product: any): void {
     if (this.selectedSize !== "") {
-      console.log(this.selectedSize + " " + this.quantity);
       this.toggleLoading()
       this.cartService.addToCart(product, this.selectedSize, this.quantity);
       this.selectedSize = ''
       this.quantity = 1
-      this.toastr.success('Item was added to cart', 'Veira Co.', { positionClass: 'toast-bottom-left', });
-    } else {
+      this.ngOnInit()
       
+    } else {
       this.toastr.success('Please select item size', 'Veira Co.', { positionClass: 'toast-bottom-left', });
     }
-
-
   }
 
 
@@ -108,9 +113,26 @@ export class ProductDetailComponent {
 
   toggleLoading = () => {
     this.isLoading = true;
+    
     setTimeout(() => {
       this.isLoading = false;
+      this.toastr.success('Item was added to cart', 'Veira Co.', { positionClass: 'toast-bottom-left', });
     }, 3000)
+  }
+
+  isCartEmpty(){
+    if(this.cartService.getCartItems.length === 0){
+      return true
+    }
+    return false
+  }
+
+  handleBuyClick(){
+    if(this.cartItems.length === 0){
+      this.toastr.success('Your cart was empty', 'Veira Co.', { positionClass: 'toast-bottom-left', });
+    } else {
+      this.router.navigate(['/checkout'])
+    }
   }
 
 

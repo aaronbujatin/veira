@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { OrderItem } from 'src/app/model/order-item.model';
 import { Order } from 'src/app/model/order.model';
 import { CartService } from 'src/app/service/cart.service';
 import { CheckoutService } from 'src/app/service/checkout.service';
 import { OrderService } from 'src/app/service/order.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-checkout',
@@ -28,7 +31,13 @@ export class CheckoutComponent {
 
   checkoutForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private orderService: OrderService, private cartService : CartService) {
+  constructor(private formBuilder: FormBuilder, 
+    private orderService: OrderService, 
+    private cartService : CartService,
+    private toastr: ToastrService,
+    private router : Router
+    
+    ) {
     this.checkoutForm = this.formBuilder.group({
       checkoutInfo: this.formBuilder.group({
         firstName: ['', Validators.required],
@@ -52,13 +61,16 @@ export class CheckoutComponent {
       this.orderService.saveOrder(formData).subscribe(
         (response) => {
           this.cartService.clearCart();
+          this.handleBuyNotification()
           console.log(response);
         }, (error) => {
           console.log(error);
         }
       )
+    } else if(this.cartItems.length === 0){
+      this.toastr.success('Your cart was empty', 'Veira Co.', { positionClass: 'toast-bottom-left', });
     } else {
-      console.log("Form was not sent");
+      this.toastr.success('Please provide correct input format details', 'Veira Co.', { positionClass: 'toast-bottom-left', });
     }
   }
 
@@ -69,6 +81,30 @@ export class CheckoutComponent {
       productId: item.productId,
       unitPrice: item.unitPrice
     });
+  }
+
+  handleBuyClick(){
+    if(this.cartItems.length === 0){
+      this.toastr.success('Your cart was empty', 'Veira Co.', { positionClass: 'toast-bottom-left', });
+    }
+  }
+
+  handleBuyNotification(){
+    Swal.fire({
+      title: 'Woohoo, Order Successful',
+      text: "Congratulations! You've successfully purchased. You will receive an email notification within a minute",
+      icon: 'success',
+      confirmButtonColor: '#121212', 
+      confirmButtonText: 'Home',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate([''])
+      } else if (result.dismiss) {
+        this.router.navigate([''])
+      }
+    })
+
+    
   }
 
 }
