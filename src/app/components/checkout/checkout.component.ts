@@ -55,16 +55,19 @@ export class CheckoutComponent {
 
   submitForm() {
     if (this.checkoutForm.valid) {
+      this.isLoading = true
       const formData = this.checkoutForm.value
-      console.log(formData);
+     
       
       this.orderService.saveOrder(formData).subscribe(
         (response) => {
           this.cartService.clearCart();
+         
           this.handleBuyNotification()
-          console.log(response);
+          this.isLoading = false
+          
         }, (error) => {
-          console.log(error);
+          
         }
       )
     } else if(this.cartItems.length === 0){
@@ -74,12 +77,16 @@ export class CheckoutComponent {
     }
   }
 
+  isLoading = false
+
   createOrderItemFormGroup(item): FormGroup {
     return this.formBuilder.group({
       id: item.id,
       quantity: item.quantity,
       productId: item.productId,
-      unitPrice: item.unitPrice
+      unitPrice: item.unitPrice,
+      imageUrl : item.imageUrl,
+      productName : item.name
     });
   }
 
@@ -92,7 +99,7 @@ export class CheckoutComponent {
   handleBuyNotification(){
     Swal.fire({
       title: 'Woohoo, Order Successful',
-      text: "Congratulations! You've successfully purchased. You will receive an email notification within a minute",
+      text: "Congratulations! You've successfully purchased. You will receive an email notification within a seconds",
       icon: 'success',
       confirmButtonColor: '#121212', 
       confirmButtonText: 'Home',

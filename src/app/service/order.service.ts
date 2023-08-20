@@ -10,9 +10,10 @@ export class OrderService {
   constructor(private httpClient : HttpClient) { }
 
   private readonly baseUrl = environment.baseUrl
+  private readonly localUrl = "http://localhost:8080"
 
   public saveOrder(order){
-    return this.httpClient.post(`${this.baseUrl}/api/v1/orders`, order);
+    return this.httpClient.post(`${this.localUrl}/api/v1/orders`, order);
   }
 
 

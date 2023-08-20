@@ -24,7 +24,7 @@ export class CartService {
     const itemExists = this.cartItems.findIndex(cartItem =>
       cartItem.productId === product.id && cartItem.size === size);
     
-      console.log("Product : " + product.id + ", Size : " + size + ", Quantity : " + quantity);
+    
       
     if (itemExists !== -1) {
       this.cartItems[itemExists].quantity += quantity;
@@ -57,10 +57,10 @@ export class CartService {
       cartItem.productId === item.productId && cartItem.size === item.size
     );
   
-    console.log(index);
+   
     
     if (index !== -1) {
-      console.log("inside of remove function");
+      
       
       this.cartItems.splice(index, 1);
       this.cartSizeSubject.next(this.cartItems.length);
@@ -90,7 +90,7 @@ export class CartService {
     const itemExists = this.cartItems.findIndex(cartItem =>
       cartItem.productId === item.productId && cartItem.size === item.size);
     if (itemExists !== -1) {
-      console.log("this is from decrement function");
+     
       
       this.cartItems[itemExists].quantity -= 1;
       localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));

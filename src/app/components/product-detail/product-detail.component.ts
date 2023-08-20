@@ -25,7 +25,7 @@ export class ProductDetailComponent {
     private toastr: ToastrService) { }
 
   ngOnInit() {
-    console.log(this.cartService.getCartItems());
+  
     
     this.route.params.subscribe(params => this.getProductById(params['id']))
 
@@ -96,7 +96,7 @@ export class ProductDetailComponent {
 
   increment() {
     this.quantity = this.quantity + 1;
-    console.log(this.quantity);
+   
 
   }
 

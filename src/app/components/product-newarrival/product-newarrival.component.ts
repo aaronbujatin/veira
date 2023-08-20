@@ -21,7 +21,7 @@ export class ProductNewarrivalComponent {
     this.productService.getProductByCatalog("Japanese Street Fashion").subscribe(
       (response: Product[]) => {
         this.products = response
-        console.log(this.products);
+       
         
       }
     )
